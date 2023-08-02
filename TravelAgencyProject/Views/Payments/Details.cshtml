@@ -1,0 +1,82 @@
+﻿@model TravelAgencyProject.Models.Payment
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Details</title>
+</head>
+<body>
+    <div>
+        <h4>Payment</h4>
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.FirstName)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.FirstName)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.LastName)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.LastName)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.Email)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.Email)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.id)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.id)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.PhoneNumber)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.PhoneNumber)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.TotalPrice)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.TotalPrice)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.CardNumber)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.CardNumber)
+            </dd>
+    
+        </dl>
+    </div>
+    <p>
+        @Html.ActionLink("Edit", "Edit", new { id = Model.ReservationId }) |
+        @Html.ActionLink("Back to List", "Index")
+    </p>
+</body>
+</html>

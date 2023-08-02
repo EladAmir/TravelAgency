@@ -1,0 +1,159 @@
+﻿@model TravelAgencyProject.Models.Flights
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title> Search Flights</title>
+    <link rel="stylesheet"
+          href="~/Content/StyleSheet3.css">
+    <style>
+
+        .backg {
+            background-image: url(/Views/Flights/photo-1436491865332-7a61a109cc05.jpg);
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        .slidecontainer {
+            width: 100%;
+        }
+
+        .slider {
+            -webkit-appearance: none;
+            width: 100%;
+            height: 25px;
+            background: #d3d3d3;
+            outline: none;
+            opacity: 0.7;
+            -webkit-transition: .2s;
+            transition: opacity .2s;
+        }
+
+            .slider:hover {
+                opacity: 1;
+            }
+
+            .slider::-webkit-slider-thumb {
+                -webkit-appearance: none;
+                appearance: none;
+                width: 25px;
+                height: 25px;
+                background: #04AA6D;
+                cursor: pointer;
+            }
+
+            .slider::-moz-range-thumb {
+                width: 25px;
+                height: 25px;
+                background: #04AA6D;
+                cursor: pointer;
+            }
+    </style>
+
+</head>
+
+<body>
+
+    @*<div class="bg-image"
+         style="background-image: url('https://mdbootstrap.com/img/Photos/Others/images/76.jpg');
+            height: 100vh">
+    </div>*@
+
+    @*<h1> Search Flights:</h1>*@
+    <div class="bg-image"
+         style="background-image: url('https://images.unsplash.com/photo-1436491865332-7a61a109cc05?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2074&q=80'); height: 100vh">
+        <h1> Search Flights:</h1>
+        <div class="wrapper"
+             form action="ViewPage" method="post">
+            <form id="search_form" action="ViewPage" method="post">
+                <div class="form-group border-bottom d-flex align-items-center justify-content-between flex-wrap">
+                    <label class="option my-sm-0 my-2">
+                        <input type="radio" name="radio" value="TwoWay" onclick="enableButton()">Two Way
+                        <span class="checkmark"></span>
+                    </label>
+                    <label class="option my-sm-0 my-2">
+                        <input type="radio" name="radio" value="OneWay" onclick="disableButton()">One Way
+                        <span class="checkmark"></span>
+                    </label>
+                </div>
+                <div class="form-group d-sm-flex margin">
+                    <div class="d-flex align-items-center flex-fill me-sm-1 my-sm-0 my-4 border-bottom position-relative">
+                        <input type="text" required placeholder="From" class="form-control" name="From">
+                        <div class="label" id="from" name="From"></div>
+                        <span class="fas fa-dot-circle text-muted"></span>
+                    </div>
+                    <div class="d-flex align-items-center flex-fill ms-sm-1 my-sm-0 my-4 border-bottom position-relative">
+                        <input type="text" required placeholder="To" class="form-control" name="To">
+                        <div class="label" id="to" name="To"></div>
+                        <span class="fas fa-map-marker text-muted"></span>
+                    </div>
+                </div>
+                <div class="form-group d-sm-flex margin">
+                    <div class="d-flex align-items-center flex-fill me-sm1 my-sm-0 border-bottom position-relative">
+                        <input type="date" required placeholder="Depart Date" class="form-control" name="DepartDate">
+                        <div class="label" id="depart" name="DepartDate"></div>
+                    </div>
+                    <div class="d-flex align-items-center flex-fill ms-sm-1 my-sm-0 my-4 border-bottom position-relative">
+                        <input type="date" required placeholder="Return Date" class="form-control" name="ReturnDate" id="return">
+                        <div class="label" id="return" name="ReturnDate"></div>
+                    </div>
+                </div>
+                <div class="form-group border-bottom d-flex align-items-center position-relative">
+                    <input type="text" required placeholder="Traveller(s)" class="form-control" name="Traveller">
+                    <div class="label" id="psngr"></div>
+                    <span class="fas fa-users text-muted"></span>
+                </div>
+
+                <div class="slidecontainer">
+                    <p>Price Range From 50$ To: </p>
+                    <input type="range" min="50" max="1000" value="50" class="slider" id="myRange" name="Price">
+                    <p>Value: <span id="demo"></span></p>
+                </div>
+
+                <div class="form-group my-3">
+                    <button class="btn btn-info" type="submit" form="search_form">Search Flights</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <script>
+        var slider = document.getElementById("myRange");
+        var output = document.getElementById("demo");
+        output.innerHTML = slider.value;
+
+        slider.oninput = function () {
+            output.innerHTML = this.value;
+        }
+    </script>
+
+    <script>
+        function disableButton() {
+            document.getElementById("return").disabled = true;
+        }
+
+        function enableButton() {
+            document.getElementById("return").disabled = false;
+        }
+    </script>
+
+    @if (ViewBag.Message != null)
+    {
+        <script type="text/javascript">
+            window.onload = function () {
+                alert("@ViewBag.Message");
+            };
+        </script>
+    }
+
+
+
+    <link href="~/Content/bootstrap.css" rel="stylesheet" />
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+</body>
+</html>

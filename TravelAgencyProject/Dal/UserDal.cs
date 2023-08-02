@@ -1,19 +1,37 @@
-﻿using System;
-using System.Collections.Generic;
+using System;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Entity;
-using TravelAgencyProject.Models;
 using System.Linq;
-using System.Web;
+using TravelAgencyProject.Models;
 
 namespace TravelAgencyProject.Dal
 {
-    public class UserDal :DbContext
+    public partial class UserDAL : DbContext
     {
+        public UserDAL()
+            : base("name=Database")
+        {
+        }
+
+        public virtual DbSet<Users> Users { get; set; }
+
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
-            base.OnModelCreating(modelBuilder);
-            modelBuilder.Entity<Users>().ToTable("tblUsers");
+            modelBuilder.Entity<Users>()
+                .Property(e => e.FirstName)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<Users>()
+                .Property(e => e.LastName)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<Users>()
+                .Property(e => e.Email)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<Users>()
+                .Property(e => e.pass)
+                .IsUnicode(false);
         }
-        public DbSet<Users>Users { get; set; }
     }
 }

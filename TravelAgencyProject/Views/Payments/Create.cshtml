@@ -1,0 +1,169 @@
+﻿@model TravelAgencyProject.Models.Payment
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Create</title>
+</head>
+<script src="https://www.paypal.com/sdk/js?client-id=sb&enable-funding=venmo&currency=USD" data-sdk-integration-source="button-factory"></script>
+<script>
+    function initPayPalButton() {
+        paypal.Buttons({
+            style: {
+                shape: 'rect',
+                color: 'gold',
+                layout: 'vertical',
+                label: 'paypal',
+
+            },
+
+            createOrder: function (data, actions) {
+                return actions.order.create({
+                    purchase_units: [{ "amount": { "currency_code": "USD", "value": 1 } }]
+                });
+            },
+
+            onApprove: function (data, actions) {
+                return actions.order.capture().then(function (orderData) {
+
+                    // Full available details
+                    console.log('Capture result', orderData, JSON.stringify(orderData, null, 2));
+
+                    // Show a success message within this page, e.g.
+                    const element = document.getElementById('paypal-button-container');
+                    element.innerHTML = '';
+                    element.innerHTML = '<h3>Thank you for your payment!</h3>';
+
+                    // Or go to another URL:  actions.redirect('thank_you.html');
+
+                });
+            },
+
+            onError: function (err) {
+                console.log(err);
+            }
+        }).render('#paypal-button-container');
+    }
+    initPayPalButton();
+</script>
+<body>
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+    <div class="form-horizontal bg-image"
+        style="background-image: url('https://images.unsplash.com/photo-1436491865332-7a61a109cc05?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2074&q=80'); height: 100vh">
+        <h1>Payment</h1>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            First Name:
+            @*@Html.LabelFor(model => model.FirstName, htmlAttributes: new { @class = "control-label col-md-2" })*@
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.FirstName, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.FirstName, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            Last Name:
+            @*@Html.LabelFor(model => model.LastName, htmlAttributes: new { @class = "control-label col-md-2" })*@
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.LastName, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.LastName, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            Email:
+            @*@Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-2" })*@
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            Id Number:
+            @*@Html.LabelFor(model => model.id, htmlAttributes: new { @class = "control-label col-md-2" })*@
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.id, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.id, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            Phone Number:
+            @*@Html.LabelFor(model => model.PhoneNumber, htmlAttributes: new { @class = "control-label col-md-2" })*@
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.PhoneNumber, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.PhoneNumber, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            Total Price:
+            @*@Html.LabelFor(model => model.TotalPrice, htmlAttributes: new { @class = "control-label col-md-2" })*@
+            <div class="col-md-10">
+                @*@Html.EditorFor(model => model.TotalPrice, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.TotalPrice, "", new { @class = "text-danger" })*@
+                @ViewBag.totalprice
+            </div>
+        </div>
+
+        <div class="form-group">
+            Credit card number:
+            @*@Html.LabelFor(model => model.CardNumber, htmlAttributes: new { @class = "control-label col-md-2" })*@
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.CardNumber, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.CardNumber, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group border-bottom d-flex align-items-center justify-content-between flex-wrap">
+            Would you like to save your credit details?
+            <label class="option my-sm-0 my-2">
+                <input type="radio" name="radio" value="No">No
+                <span class="checkmark"></span>
+            </label>
+            <label class="option my-sm-0 my-2">
+                <input type="radio" name="radio" value="Yes">Yes
+                <span class="checkmark"></span>
+            </label>
+        </div>
+
+
+
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+
+
+
+
+        <div id="smart-button-container">
+            <div style="text-align: center;">
+                <div id="paypal-button-container"></div>
+            </div>
+        </div>
+
+    }
+
+    <div>
+        @Html.ActionLink("Back to search", "SearchFlights")
+    </div>
+
+</body>
+</html>
+
+

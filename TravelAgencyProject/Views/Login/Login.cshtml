@@ -1,0 +1,44 @@
+﻿@model TravelAgencyProject.Models.Users
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <link rel="stylesheet"
+          href="~/Content/StyleSheet1.css">
+    <meta name="viewport" content="width=device-width" />
+    <title>LoginPage</title>
+</head>
+<body>
+    <header>
+        <h1>Travel Agency</h1>
+    </header>
+    <main>
+        <form id="login_form" class="form_class" action="Login" method="post">
+            <div class="form_div">
+                <label>Login:</label>
+                <input id="Email " class="field_class" name="Email" type="email" placeholder="Enter email">
+                <label>Password:</label>
+                <input id="pass" class="field_class" name="pass" type="password" placeholder="Enter password">
+                <button class="submit_class" type="submit" form="login_form">Login</button>
+            </div>
+            <div class="info_div">
+                <p>New user? <a href="https://localhost:44378/Login/NewUser">Click here to sign up!</a></p>
+            </div>
+        </form>
+    </main>
+    <footer>
+        <p>The best travel agency in the world!<a href="#"> The pashutot&trade;</a></p>
+    </footer>
+    @*@if (Model.pass==null || Model.Email==null || Model.FirstName==null || Model.LastName == null)
+    {
+        <div>@ViewBag.ErrorMessage </div>
+    }*@
+
+
+</body>
+</html>

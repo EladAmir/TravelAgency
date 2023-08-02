@@ -1,0 +1,126 @@
+﻿@model IEnumerable<TravelAgencyProject.Models.Flights>
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>ShowFlights</title>
+    <style>
+        table, th, td {
+            border: 1px solid black;
+        }
+    </style>
+    <link href="~/Content/bootstrap.css" rel="stylesheet" />
+</head>
+<body>
+    <div class="bg-image"
+         style="background-image: url('https://images.unsplash.com/photo-1436491865332-7a61a109cc05?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2074&q=80'); height: 100vh">
+        <table class="table">
+            <thead class="thead-dark">
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Id)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.From)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.To)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.DepartDate)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Price)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.FlightType)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.DepartTime)
+                    </th>
+                    @*<th>
+                            @Html.DisplayNameFor(model => model.ReturnTime)
+                        </th>*@
+                    <th></th>
+                </tr>
+            </thead>
+
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Id)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.From)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.To)
+                    </td>
+                    <td>
+                        @{
+                            var departdate = item.DepartDate.ToShortDateString();
+                        }
+                        @Html.DisplayFor(modelItem => departdate)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Price)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.FlightType)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.DepartTime)
+                    </td>
+                    @*<td>
+                            @Html.DisplayFor(modelItem => item.ReturnTime)
+                        </td>*@
+                    <td>
+                        @Html.ActionLink("Booking", "Booking", new { id = item.Id, passnum = ViewBag.pasnum })
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.To)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.From)
+                    </td>
+                    <td>
+                        @{
+                            var returndate = item.ReturnDate.ToShortDateString();
+                        }
+                        @Html.DisplayFor(modelItem => returndate)
+                    </td>
+                    <td>
+                    </td>
+                    <td>
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ReturnTime)
+                    </td>
+                    @*<td>
+                            @Html.DisplayFor(modelItem => item.ReturnTime)
+                        </td>*@
+                </tr>
+
+            }
+        </table>
+
+        <div>
+            @Html.ActionLink("Back to search", "SearchFlights")
+        </div>
+
+    </div>
+</body>
+</html>

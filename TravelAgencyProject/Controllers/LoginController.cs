@@ -1,100 +1,60 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
+using System.Data.Entity;
 using System.Linq;
+using System.Net;
 using System.Web;
 using System.Web.Mvc;
-using TravelAgencyProject.Models;
-using TravelAgencyProject.ViewModel;
 using TravelAgencyProject.Dal;
+using TravelAgencyProject.Models;
 
 namespace TravelAgencyProject.Controllers
 {
     public class LoginController : Controller
     {
-
-    public ActionResult Index()
+        // GET: Login
+        public ActionResult SingUp()
         {
+            return View("NewUser");
+        }
+
+        public ActionResult Success()
+        {
+            return View("Success");
+        }
+        public ActionResult Login()
+        {
+
+            Users user = new Users();
+            user.Email = Request.Form["Email"];
+            user.pass = Request.Form["pass"];
+            var users = new UserDAL().Users;
+
+            if (user.Email == "admin@gmail.com" && user.pass.Equals("admin"))
+                return RedirectToAction("Index", "Flights");
+
+            foreach (var u in users)
+            {
+                if (u.Email.Equals(user.Email) && u.pass.Equals(user.pass))
+                    return RedirectToAction("SearchFlights", "Flights");
+            }
+            Session["currentuser"]=user;
             return View();
         }
-
-        public ActionResult ShowLoginPage()
-        {
-            return View("LoginPage");
-        }
-
-        public ActionResult AdminLogin()
-        {
-
-            return View("AddUser");
-        }
-
-        //public ActionResult EnterNewUser()
-        //{
-        //    UserDal dal = new UserDal();
-        //    List<Users> objusers = dal.Users.ToList<Users>();
-        //    UsersViewModel cvm = new UsersViewModel();
-        //    cvm.user = new Users();
-        //    cvm.users = objusers;
-        //    return View(cvm);
-        //}
 
         public ActionResult AddUser(Users user)
         {
             if (ModelState.IsValid)
             {
-                UserDal dal = new UserDal();
-                //save user on DB
-                dal.Users.Add(user);
-                dal.SaveChanges();
-                return View("LoginPage");
+                var userDal = new UserDAL();
+                userDal.Users.Add(user);
+                userDal.SaveChanges();
+                return RedirectToAction("Login", "Login");
 
             }
-            else
-                return View("NewUser");
 
+            return View();    
         }
-        public ActionResult Submit(Users user)
-        {
-            UsersViewModel userVM = new UsersViewModel();
-            UserDal dal = new UserDal();
-            Users objuser = new Users();
-
-
-            if (ModelState.IsValid)
-            {
-                objuser.Email = Request.Form["Email"].ToString();
-                objuser.pass = Request.Form["pass"].ToString();
-                //save user om DB
-                dal.Users.Add(objuser);
-                dal.SaveChanges();
-                userVM.user = new Users();
-
-            }
-            else
-                userVM.user = objuser;
-
-            userVM.users = dal.Users.ToList<Users>();
-            for( int i = 0; i < userVM.users.Count; i++)
-            {
-                if (user.Email == userVM.users[i].Email)
-                {
-                    if (user.pass == userVM.users[i].pass)
-                        return View("Success", user);
-                }
-
-            }
-            return View("LoginPage");
-        }
-        public Users GetUser()
-        {
-            Users objuser=new Users();
-            //Console.WriteLine("wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww\n\n",objuser);
-            ////objuser.FirstName = Request.Form["user.FirstName"].ToString();
-            ////objuser.LastName = Request.Form["user.LastName"].ToString();
-            objuser.Email = Request.Form["Email"].ToString();
-            objuser.pass = Request.Form["pass"].ToString();
-            return objuser;
-        }
-
     }
 }

@@ -14,43 +14,23 @@ namespace TravelAgencyProject
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
+            routes.MapRoute(
+               name: "SingUp",
+               url: "Login/NewUser",
+               defaults: new { controller = "Login", action = "SingUp", id = UrlParameter.Optional }
+           );
 
             routes.MapRoute(
-                name: "Login",
-                url: "",
-                defaults: new { controller = "Login", action = "ShowLoginPage", id = UrlParameter.Optional }
-            );
+              name: "Success",
+              url: "Flights/Success",
+              defaults: new { controller = "Flights", action = "Booking", id = UrlParameter.Optional }
+          );
 
-
-            routes.MapRoute(
-                name: "LoginPage",
-                url: "Login/LoginPage",
-                defaults: new { controller = "Login", action = "Submit", id = UrlParameter.Optional }
-            );
-
-            routes.MapRoute(
-                name: "NewUser",
-                url: "Login/NewUser",
-                defaults: new { controller = "Login", action = "AddUser", id = UrlParameter.Optional }
-            );
-
-
-            routes.MapRoute(
-                name: "Enter",
-                url: "Login/EnterNewUser",
-                defaults: new { controller = "Login", action = "EnterNewUser", id = UrlParameter.Optional }
-            );
-
-             routes.MapRoute(
-                name: "Success",
-                url: "Login/Success",
-                defaults: new { controller = "Login", action = "Submit", id = UrlParameter.Optional }
-            );
 
             routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
-                defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
+                defaults: new { controller = "Login", action = "Login", id = UrlParameter.Optional, extraparm = UrlParameter.Optional }
             );
         }
     }
